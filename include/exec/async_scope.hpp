@@ -18,6 +18,7 @@
 #include <stdexec/execution.hpp>
 #include <stdexec/__detail/__intrusive_queue.hpp>
 #include <exec/env.hpp>
+#include <exec/inline_scheduler.hpp>
 
 namespace exec {
   /////////////////////////////////////////////////////////////////////////////
@@ -35,7 +36,8 @@ namespace exec {
 
     using __env_t =
       make_env_t<
-        with_t<get_stop_token_t, in_place_stop_token>>;
+        with_t<get_stop_token_t, in_place_stop_token>,
+        with_t<get_scheduler_t, inline_scheduler>>;
 
     struct __impl {
       in_place_stop_source __stop_source_{};
@@ -51,7 +53,8 @@ namespace exec {
 
       __env_t __make_env_() const noexcept {
         return make_env(
-          with(stdexec::get_stop_token, __stop_source_.get_token()));
+          with(get_stop_token, __stop_source_.get_token()),
+          with(get_scheduler, inline_scheduler{}));
       }
     };
 
