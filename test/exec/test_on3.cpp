@@ -45,7 +45,7 @@ TEST_CASE("Can pass exec::on sender to async_scope::spawn", "[adaptors][exec::on
   std::this_thread::sync_wait(scope.on_empty());
 }
 
-TEST_CASE("TODO: Can pass exec::on sender to async_scope::spawn_future", "[adaptors][exec::on]") {
+TEST_CASE("Can pass exec::on sender to async_scope::spawn_future", "[adaptors][exec::on]") {
   exec::async_scope scope;
   impulse_scheduler sched;
   auto fut = scope.spawn_future(exec::on(sched, ex::just(42)));
